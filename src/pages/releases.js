@@ -34,7 +34,7 @@ export default () => (
       `}
       render={data => (
         data.allStrapiIotReleases.edges.map(({ node: r }) =>(
-          <Card title={<Link href={`/releases/${r.tag_name}`} >{r.tag_name}</Link>}>{r.description}</Card>
+          <Card title={<Link to={`/releases/${r.tag_name}`} >{r.tag_name}</Link>}>{r.description}</Card>
         ))
       )}
     />
