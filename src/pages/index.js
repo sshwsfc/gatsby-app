@@ -1,20 +1,24 @@
 import React from "react"
 import { Link } from "gatsby"
 
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Button from 'react-bootstrap/Button'
+
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/releases/">Go to Releases</Link> <br />
+    <Jumbotron>
+      <h1>AirIot</h1>
+      <p>
+        节省成本，创造利润
+      </p>
+      <p>
+      <Link to="/repos"><Button variant="primary">版本</Button></Link>
+      </p>
+    </Jumbotron>
   </Layout>
 )
 

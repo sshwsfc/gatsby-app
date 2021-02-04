@@ -1,43 +1,43 @@
-import React from "react"
-import { StaticQuery, graphql, Link } from "gatsby"
-import { Card } from 'antd'
+import React from "react"  
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Release from "../components/Release"
 
-export default () => (
-  <Layout>
-    <SEO title="Releases" />
-    <StaticQuery query={graphql`
-      query Release {
-        allStrapiIotReleases(sort: {fields: create_time, order: DESC}) {
-          totalCount
-          edges {
-            node {
-              assets {
-                name
-                url
-                id
-              }
-              create_time
-              description
-              repo {
-                group_name
-                repo_name
-              }
-              tag_name
-              published_at
-            }
-          }
+export const query = graphql`  
+  query RepoQuery($id: Int!) {
+    repo: strapiRepos(strapiId: {eq: $id}) {
+      group_name
+      repo_name
+      releases {
+        assets {
+          name
+          id
+          url
         }
+        create_time
+        description
+        id
+        tag_name
       }
-      `}
-      render={data => (
-        data.allStrapiIotReleases.edges.map(({ node: r }) =>(
-          <Card title={<Link to={`/releases/${r.tag_name}`} >{r.tag_name}</Link>}>{r.description}</Card>
-        ))
-      )}
-    />
-  </Layout>
-)
+    }
+  }
+`
 
+const Releases = ({ data }) => {  
+  const repo = data.repo
+  return (
+    <Layout>
+      <SEO title={`Releases ${repo.group_name} ${repo.repo_name}`} />
+      <h5>{repo.group_name} / {repo.repo_name}</h5>
+      <h3>版本列表</h3>
+      {
+        repo.releases.sort((a, b) => b.id - a.id)
+          .map(r => <Release release={r} showRepo={false} />)
+      }
+    </Layout>
+  )
+}
+
+export default Releases  

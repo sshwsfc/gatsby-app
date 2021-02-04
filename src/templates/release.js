@@ -1,50 +1,42 @@
 import React from "react"  
 import { graphql } from "gatsby"
 
-import ReactMarkdown from "react-markdown"  
-import Moment from "react-moment"
-
 import Layout from "../components/layout"
+import SEO from "../components/seo"
+import Release from "../components/Release"
 
 export const query = graphql`  
   query ReleaseQuery($id: Int!) {
-    strapiIotReleases(strapiId: { eq: $id }) {
-      assets {
-          name
-          url
-          id
-      }
-      create_time
-      description
+    release: strapiReleases(strapiId: { eq: $id }) {
       repo {
-          group_name
-          repo_name
+        group_name
+        id
+        repo_name
       }
-      tag_name
-      published_at
       strapiId
+      description
+      id
+      create_time
+      tag_name
+      assets {
+        id
+        name
+        url
+      }
     }
   }
 `
 
-const Article = ({ data }) => {  
-  const article = data.strapiIotReleases
+const ReleasePage = ({ data }) => {  
+  const r = data.release
   return (
-    <Layout title={article.tag_name}>
-      <div>
-        <h1>{article.repo?.group_name} / {article.repo?.repo_name}</h1>
-
-        <div className="uk-section">
-          <div className="uk-container uk-container-small">
-            <ReactMarkdown source={article.description} />
-            <p>
-              <Moment format="MMM Do YYYY">{article.create_time}</Moment>
-            </p>
-          </div>
-        </div>
-      </div>
+    <Layout>
+      <SEO title={`Release ${r.tag_name}`} />
+      <h5>{r.repo?.group_name} / {r.repo?.repo_name}</h5>
+      <h3>{r.tag_name}</h3>
+      <Release release={r} showRepo={false} />
     </Layout>
   )
 }
 
-export default Article  
+export default ReleasePage  

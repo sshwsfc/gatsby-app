@@ -72,37 +72,16 @@ function SEO({ description, lang, meta, title }) {
       
 
       //custom styles
-      link={[  
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css?family=Staatliches",
-        },
+      link={[
         {
           rel: "stylesheet",
           href:
-            "https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css",
-        },
-        {
-          rel: "stylesheet",
-          href:
-            "https://lib.baomitu.com/antd/4.11.2/antd.css",
-        },
+            "https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.css",
+        }
       ]}
 
       //custom scripts
-      script={[  
-        {
-          src:
-            "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.min.js",
-        },
-        {
-          src:
-            "https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js",
-        },
-        {
-          src: "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.js",
-        },
-      ]}
+      script={[ ]}
       
     />
   )

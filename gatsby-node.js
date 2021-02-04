@@ -1,49 +1,71 @@
 
-exports.createPages = async ({ graphql, actions }) => {  
-    const { createPage } = actions
-    const result = await graphql(
-      `
-        {
-          releases: allStrapiIotReleases(sort: {fields: create_time, order: DESC}) {
-            totalCount
-            edges {
-              node {
-                assets {
-                  name
-                  url
-                  id
-                }
-                create_time
-                description
-                repo {
-                  group_name
-                  repo_name
-                }
-                tag_name
-                published_at
-                strapiId
-              }
-            }
-          }
+const createReleasePages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  
+  const result = await graphql(
+    `
+    {
+      releases: allStrapiReleases {
+        nodes {
+          strapiId
         }
-      `
-    )
-  
-    if (result.errors) {
-      throw result.errors
+      }
     }
-  
-    // Create blog articles pages.
-    const releases = result.data.releases.edges
-  
-    releases.forEach(({ node: r }, index) => {
-      createPage({
-        path: `/releases/${r.tag_name}`,
-        component: require.resolve("./src/templates/release.js"),
-        context: {
-          id: r.strapiId,
-        },
-      })
-    })
+    `
+  )
 
+  if (result.errors) {
+    throw result.errors
   }
+
+  const releases = result.data.releases.nodes
+
+  releases.forEach((r, index) => {
+    createPage({
+      path: `/releases/${r.strapiId}`,
+      component: require.resolve("./src/templates/release.js"),
+      context: {
+        id: r.strapiId,
+      },
+    })
+  })
+}
+
+const createRepoReleases = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  
+  const result = await graphql(
+    `
+    {
+      repo: allStrapiRepos {
+        nodes {
+          strapiId
+        }
+      }
+    }
+    `
+  )
+
+  if (result.errors) {
+    throw result.errors
+  }
+
+  const repos = result.data.repo.nodes
+
+  repos.forEach((r, index) => {
+    createPage({
+      path: `/repos/${r.strapiId}/releases`,
+      component: require.resolve("./src/templates/releases.js"),
+      context: {
+        id: r.strapiId,
+      },
+    })
+  })
+}
+
+exports.createPages = async (params) => {  
+  await [ 
+    createReleasePages(params),
+    createRepoReleases(params)
+  ]
+}

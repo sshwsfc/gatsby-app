@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `AirIot`,
+    description: `物联网 SCADA 传感器 监控 平台`,
+    author: `@gtiot`,
   },
   pathPrefix: "/gatsby-app",
   plugins: [
