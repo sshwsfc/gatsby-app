@@ -9,8 +9,9 @@ const Header = ({ siteTitle }) => (
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="mr-auto">
-        <Nav.Link>产品特性</Nav.Link>
-        <Nav.Link>版本发布</Nav.Link>
+        <Nav.Link><Link to="/">产品特性</Link></Nav.Link>
+        <Nav.Link><Link to="/repos" >项目模块</Link></Nav.Link>
+        <Nav.Link><Link to="/releases">版本发布</Link></Nav.Link>
       </Nav>
       <Nav>
         <Nav.Link href="#deets">立即试用</Nav.Link>

@@ -10,7 +10,7 @@ import SEO from "../components/seo"
 export default () => (
   <Layout>
     <SEO title="Repo" />
-    <h3>项目</h3>
+    <h3>项目模块</h3>
     <Row xs={2} md={3} lg={4}>
     <StaticQuery
       query={graphql`
