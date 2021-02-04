@@ -33,13 +33,9 @@ module.exports = {
       options: {
         apiURL: "http://air.tmis.top:1337",
         contentTypes: [
-          "user", "iot-releases"
+          "repos", "releases"
         ],
-        queryLimit: 1000,
-        loginData: {
-          identifier: "23025006@qq.com",
-          password: "sshw720541",
-        },
+        queryLimit: 1000
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
