@@ -63,9 +63,43 @@ const createRepoReleases = async ({ graphql, actions }) => {
   })
 }
 
+const createReposPages = async ({ graphql, actions: { createPage } }) => {
+  const result = await graphql(
+    `
+    {
+      allStrapiRepos {
+        group(field: group_name, limit: 1) {
+          nodes {
+            group_name
+          }
+        }
+      }
+    }
+    `
+  )
+
+  if (result.errors) {
+    throw result.errors
+  }
+
+  const group = result.data.allStrapiRepos.group
+
+  group.forEach((g, index) => {
+    const groupName = g.nodes[0].group_name
+    createPage({
+      path: `/repos/${groupName}`,
+      component: require.resolve("./src/templates/repos.js"),
+      context: {
+        group: groupName,
+      },
+    })
+  })
+}
+
 exports.createPages = async (params) => {  
-  await [ 
+  await Promise.all([ 
+    createReposPages(params),
     createReleasePages(params),
     createRepoReleases(params)
-  ]
+  ])
 }
